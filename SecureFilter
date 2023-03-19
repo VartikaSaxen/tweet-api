@@ -1,0 +1,20 @@
+package com.api.TweeterDemo_1;
+
+public class AuthFilter extends OncePerRequestFilter {
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String clientId = request.getHeader("client-id");
+        String clientSecret = request.getHeader("client-secret");
+
+        if (isValidClient(clientId, clientSecret)) {
+            filterChain.doFilter(request, response);
+        } else {
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid client credentials");
+        }
+    }
+
+    private boolean isValidClient(String clientId, String clientSecret) {
+       if(clientId=="11" && clientSecret=="one")
+        return true;
+    }
+}
